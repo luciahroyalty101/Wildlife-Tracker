@@ -35,4 +35,10 @@ public class DatabaseRule extends ExternalResource {
             System.out.println(ex);
         }
     }
+    public static List<String> allAnimalNames(){
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery("SELECT name FROM animals")
+                    .executeAndFetch(String.class);
+        }
+    }
 }
