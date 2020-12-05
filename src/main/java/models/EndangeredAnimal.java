@@ -13,4 +13,14 @@ public class EndangeredAnimal extends Animal {
         this.type = DB_TYPE;
     }
 
-}
+
+
+    public static List<EndangeredAnimal> all(){
+        String sql = "SELECT * FROM animals where type=:type";
+        try(Connection con = DB.sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("type",DB_TYPE)
+                    .executeAndFetch(EndangeredAnimal.class);
+        }
+    }
+    }
