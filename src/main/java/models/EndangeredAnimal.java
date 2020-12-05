@@ -3,7 +3,7 @@ package models;
 import org.sql2o.Connection;
 import java.util.List;
 
-public class EndangeredAnimal {
+public class EndangeredAnimal extends Animal {
     private static final String DB_TYPE = "Endangered";
 
     public EndangeredAnimal(String name, String health, String age) {
