@@ -1,5 +1,7 @@
 package models;
 import org.sql2o.Connection;
+
+import java.sql.Connection;
 import java.util.List;
 
 public class NormalAnimal extends Animal {
@@ -11,4 +13,25 @@ public class NormalAnimal extends Animal {
         this.age = age;
         this.type = DB_TYPE;
     }
+    public static List<NormalAnimal> all(){
+        String sql = "SELECT * FROM animals where type=:type";
+        try(Connection con = DB.sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("type",DB_TYPE)
+                    .executeAndFetch(NormalAnimal.class);
+        }
     }
+
+    public static NormalAnimal find(int searchId){
+        String sql = "SELECT * FROM animals where (id=:id AND type=:type)";
+        try(Connection con = DB.sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("id",searchId)
+                    .addParameter("type",DB_TYPE)
+                    .executeAndFetchFirst(NormalAnimal.class);
+        }
+    }
+
+
+}
+
