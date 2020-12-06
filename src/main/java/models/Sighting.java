@@ -1,8 +1,12 @@
 package models;
 
+import org.sql2o.Connection;
+import org.sql2o.Sql2oException;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Sighting {
@@ -20,10 +24,12 @@ public class Sighting {
         this.timestamp = new Timestamp(new Date().getTime());
         this.rangerid = rangerid;
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(animalName, location, rangerid);
     }
+
     public String getAnimalName() {
         return animalName;
     }
@@ -36,7 +42,7 @@ public class Sighting {
         return timestamp;
     }
 
-    public String getReadableTimestamp(){
+    public String getReadableTimestamp() {
         return DateFormat.getDateTimeInstance().format(getTimestamp());
     }
 
@@ -46,6 +52,46 @@ public class Sighting {
 
     public int getId() {
         return id;
+    }
+
+
+    public void save() {
+        String sql = "INSERT INTO sightings(animalname,location,timestamp,rangerid) values (:animalName,:location,:timestamp,:rangerid)";
+        try (Connection con = DB.sql2o.open()) {
+            this.id = (int) con.createQuery(sql, true)
+                    .addParameter("animalName", this.animalName)
+                    .addParameter("location", this.location)
+                    .addParameter("timestamp", this.timestamp)
+                    .addParameter("rangerid", this.rangerid)
+                    .executeUpdate()
+                    .getKey();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+    public String getRangerName(){
+        return Ranger.find(rangerid).getName();
+    }
+
+    public static List<Sighting> all(){
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery("SELECT * FROM sightings")
+                    .executeAndFetch(Sighting.class);
+        }
+    }
+    public static Sighting find(int searchId){
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery("SELECT * FROM sightings WHERE id=:id")
+                    .addParameter("id",searchId)
+                    .executeAndFetchFirst(Sighting.class);
+        }
+    }
+
+    public static List<String> getAllLocations(){
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery("SELECT location FROM sightings")
+                    .executeAndFetch(String.class);
+        }
     }
 
 }
