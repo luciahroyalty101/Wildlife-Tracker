@@ -18,7 +18,7 @@ public class App {
         staticFileLocation("/public");
 
 
-        //get: Homepage
+
         get("/", (Route) (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<Sighting> allSightings = Sighting.all();
