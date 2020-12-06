@@ -1,5 +1,9 @@
 package models;
 
+import org.sql2o.Connection;
+import org.sql2o.Sql2oException;
+
+import java.util.List;
 import java.util.Objects;
 
 public class Animal {
@@ -59,5 +63,28 @@ public class Animal {
     public String getType() {
         return type;
     }
+    public void save(){
+        try(Connection con = DB.sql2o.open()) {
+            String sql = "INSERT INTO animals(name,health, age, type) values (:name,:health,:age,:type)";
+            this.id = (int) con.createQuery(sql,true)
+                    .addParameter("name", this.name)
+                    .addParameter("health", this.health)
+                    .addParameter("age",this.age)
+                    .addParameter("type",this.type)
+                    .executeUpdate()
+                    .getKey();
+        }catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public static List<String> allAnimalNames(){
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery("SELECT name FROM animals")
+                    .executeAndFetch(String.class);
+        }
+    }
+
+}
 
 }
