@@ -1,14 +1,21 @@
 import models.DB;
 import org.junit.rules.ExternalResource;
 import org.sql2o.Connection;
-import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
-import java.sql.Connection;
+import java.util.List;
+
 
 public class DatabaseRule extends ExternalResource {
 
+    private int name;
+    private int id;
+    private int age;
+    private String health;
+    private String type;
+
     protected void before() {
-        DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/wildlife_tracker_test","moringa","lucy");
+        DB.sql2o = new models.Sql2o("jdbc:postgresql://localhost:5432/wildlife_tracker_test","moringa","lucy");
     }
 
     protected void after() {

@@ -36,7 +36,7 @@ public class DB {
 
 
 
-class Sql2o {
+public class Sql2o {
         public Sql2o(String s, String username, String password) {
         }
 
