@@ -28,6 +28,10 @@ public class Sighting {
     public Sighting(String zone_a, int i) {
     }
 
+    public Sighting(String name, String location, int id) {
+    }
+
+
     @Override
     public int hashCode() {
         return Objects.hash(animalName, location, rangerid);
