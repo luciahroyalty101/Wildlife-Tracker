@@ -1,8 +1,8 @@
 package models;
-import org.sql2o.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sql2o.Connection;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,5 +31,16 @@ public class DB {
             logger.error("unable to connect to database");
         }
 
+    }
+}
+
+
+
+class Sql2o {
+        public Sql2o(String s, String username, String password) {
+        }
+
+    public Connection open() {
+        return null;
     }
 }
