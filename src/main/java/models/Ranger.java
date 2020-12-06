@@ -3,6 +3,7 @@ package models;
 import org.sql2o.Connection;
 import org.sql2o.Sql2oException;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Ranger {
@@ -47,8 +48,21 @@ public class Ranger {
             }
         }
     }
+    public static List<Ranger> all(){
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery("SELECT * FROM rangers")
+                    .executeAndFetch(Ranger.class);
+        }
+    }
+    public static Ranger find(int searchId){
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery("SELECT * FROM rangers WHERE id=:id")
+                    .addParameter("id",searchId)
+                    .executeAndFetchFirst(Ranger.class);
+        }
+    }
 
     private boolean crossCheck() {
-        return false;
+            return false;
     }
 }
