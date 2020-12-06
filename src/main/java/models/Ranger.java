@@ -61,6 +61,21 @@ public class Ranger {
                     .executeAndFetchFirst(Ranger.class);
         }
     }
+    public List<Sighting> mySightings(){
+        String sql = "SELECT * FROM sightings WHERE rangerid=:id";
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery(sql)
+                    .addParameter("id",this.id)
+                    .executeAndFetch(Sighting.class);
+        }
+    }
+    public void delete(){
+        try(Connection con = DB.sql2o.open()){
+            con.createQuery("DELETE FROM rangers WHERE id=:id")
+                    .addParameter("id",this.id)
+                    .executeUpdate();
+        }
+    }
 
     private boolean crossCheck() {
             return false;
