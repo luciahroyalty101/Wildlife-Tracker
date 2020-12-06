@@ -5,12 +5,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class EndangeredAnimalTest<DatabaseRule> {
+public class EndangeredAnimalTest {
 //    @Rule
 //    public DatabaseRule databaseRule = new DatabaseRule();
 
     private EndangeredAnimal newAnimal() {
         return new EndangeredAnimal("Goat","Healthy","Young");
+
     }
     @Test
     public void animal_instantiatesCorrectly_true(){
