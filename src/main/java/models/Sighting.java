@@ -25,6 +25,9 @@ public class Sighting {
         this.rangerid = rangerid;
     }
 
+    public Sighting(String zone_a, int i) {
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(animalName, location, rangerid);
