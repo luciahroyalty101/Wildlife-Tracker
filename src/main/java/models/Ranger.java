@@ -76,8 +76,17 @@ public class Ranger {
                     .executeUpdate();
         }
     }
+    private boolean crossCheck(){
+        for(Ranger ranger: Ranger.all()){
+            if(this.getName().equals(ranger.getName())){
+                this.id = ranger.id;
+                this.name = ranger.name;
+                return true;
+            }
+        }
 
-    private boolean crossCheck() {
+    boolean crossCheck; {
             return false;
     }
 }
+    }
