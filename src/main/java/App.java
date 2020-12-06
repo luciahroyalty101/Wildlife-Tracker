@@ -26,7 +26,7 @@ public class App {
             return new ModelAndView(model,"index.hbs");
         },new HandlebarsTemplateEngine());
 
-        //get: retrieve endangered animals
+
         get("/animals/endangered", (Route) (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("endangered", EndangeredAnimal.all());

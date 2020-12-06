@@ -1,0 +1,53 @@
+{{#partial "navlinks"}}
+    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+    <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            View Animals
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/animals/endangered">Endangered</a>
+            <a class="dropdown-item" href="/animals/not-endangered">Not Endangered</a>
+        </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/rangers">Our Rangers</a></li>
+    <li class="nav-item"><a class="nav-link" href="/sightings">Sighting Locations</a></li>
+    <li class="nav-item"><a class="nav-link" href="/sighting/new">New Sighting</a></li>
+{{/partial}}
+
+{{#partial "preContent"}}
+    <div class="jumbotron jumbotrion-fluid animal-jumbotron">
+        <div class="container">
+            <h1 class="display-3">Tulinde jungle!</h1>
+            <p class="lead">The animal conservancy</p>
+        </div>
+    </div>
+{{/partial}}
+
+{{#partial "content"}}
+    {{#if normal}}
+        <table class="table text-center">
+            <h4 class="text-center">Below are all the non-endangered animals spotted by our rangers</h4>
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Health</th>
+                <th scope="col">Age</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each normal}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{health}}</td>
+                    <td>{{age}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <h5 class="text-center">There are no animals sighted yet..Report a sighting here.</h5>
+    {{/if}}
+
+{{/partial}}
+
+{{> layout.hbs}}
