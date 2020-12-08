@@ -15,7 +15,7 @@ public class DatabaseRule extends ExternalResource {
     private String type;
 
     protected void before() {
-        DB.sql2o = new models.Sql2o("jdbc:postgresql://localhost:5432/wildlife_tracker_test","moringa","lucy");
+        DB.sql2o = new org.sql2o.Sql2o("jdbc:postgresql://localhost:5432/wildlife_tracker_test","moringa","lucy");
     }
 
     protected void after() {

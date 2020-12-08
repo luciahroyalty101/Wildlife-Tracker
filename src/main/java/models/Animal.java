@@ -9,23 +9,29 @@ import java.util.Objects;
 public class Animal {
     public int id;
     public String name;
-    public String health;
-    public String age;
     public String type;
+    private final String DATABASE_TYPE = "animal";
+
+    public Animal(String name) {
+        this.name = name;
+        this.setType(DATABASE_TYPE);
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Animal animal = (Animal) o;
-        return  Objects.equals(name, animal.name) &&
-                Objects.equals(health, animal.health) &&
-                Objects.equals(age, animal.age) &&
-                Objects.equals(type, animal.type);
+        return  Objects.equals(name, animal.name);
+
     }
     @Override
     public int hashCode() {
-        return Objects.hash(name, health, age, type);
+        return Objects.hash(name);
     }
 
     public int getId() {
@@ -44,44 +50,27 @@ public class Animal {
         this.name = name;
     }
 
-    public String getHealth() {
-        return health;
-    }
 
-    public void setHealth(String health) {
-        this.health = health;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getType() {
-        return type;
-    }
     public void save(){
         try(Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO animals(name,health, age, type) values (:name,:health,:age,:type)";
+            String sql = "INSERT INTO animals(name, type) values (:name,:type)";
             this.id = (int) con.createQuery(sql,true)
+                    .throwOnMappingFailure(false)
                     .addParameter("name", this.name)
-                    .addParameter("health", this.health)
-                    .addParameter("age",this.age)
-                    .addParameter("type",this.type)
+                    .addParameter("type", this.type)
                     .executeUpdate()
                     .getKey();
+            setId(id);
         }catch (Sql2oException ex) {
             System.out.println(ex);
         }
     }
 
-    public static List<String> allAnimalNames(){
+    public static List<Animal> allAnimals(){
         try(Connection con = DB.sql2o.open()){
-            return con.createQuery("SELECT name FROM animals")
-                    .executeAndFetch(String.class);
+            return con.createQuery("SELECT * FROM animals WHERE type ='animal'")
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Animal.class);
         }
     }
 

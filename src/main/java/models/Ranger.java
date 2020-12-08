@@ -35,23 +35,35 @@ public class Ranger {
         return name;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void save(){
-        if(!crossCheck()){
             String sql = "INSERT INTO rangers(name) VALUES(:name)";
             try(Connection con = DB.sql2o.open()){
                 this.id = (int) con.createQuery(sql,true)
                         .addParameter("name",this.name)
                         .executeUpdate()
                         .getKey();
+                setId(id);
             } catch (Sql2oException ex) {
                 System.out.println(ex);
             }
         }
-    }
+
     public static List<Ranger> all(){
         try(Connection con = DB.sql2o.open()){
-            return con.createQuery("SELECT * FROM rangers")
+            String sql = "SELECT * FROM rangers";
+            return con.createQuery(sql)
                     .executeAndFetch(Ranger.class);
+        }catch (Sql2oException ex){
+            System.out.println(ex);
+            return null;
         }
     }
     public static Ranger find(int searchId){
@@ -76,17 +88,5 @@ public class Ranger {
                     .executeUpdate();
         }
     }
-    private boolean crossCheck(){
-        for(Ranger ranger: Ranger.all()){
-            if(this.getName().equals(ranger.getName())){
-                this.id = ranger.id;
-                this.name = ranger.name;
-                return true;
-            }
-        }
 
-    boolean crossCheck; {
-            return false;
-    }
-}
     }

@@ -19,29 +19,29 @@ public class NormalAnimalTest {
         assertTrue(normalAnimal instanceof NormalAnimal);
     }
 
-    @Test
-    public void getName_returnAnimalsName(){
-        NormalAnimal normalAnimal = newAnimal();
-        assertEquals("Goat", normalAnimal.getName());
-    }
-
-    @Test
-    public void getHealth_returnAnimalsHealth(){
-        NormalAnimal normalAnimal = newAnimal();
-        assertEquals("Healthy", normalAnimal.getHealth());
-    }
-
-    @Test
-    public void getAge_returnAnimalsAge(){
-        NormalAnimal normalAnimal = newAnimal();
-        assertEquals("Young", normalAnimal.getAge());
-    }
-
-    @Test
-    public void getStatus_returnAnimalsStatus(){
-        NormalAnimal normalAnimal = newAnimal();
-        assertEquals("Not Endangered", normalAnimal.getType());
-    }
+//    @Test
+//    public void getName_returnAnimalsName(){
+//        NormalAnimal normalAnimal = newAnimal();
+//        assertEquals("Goat", normalAnimal.getName());
+//    }
+//
+//    @Test
+//    public void getHealth_returnAnimalsHealth(){
+//        NormalAnimal normalAnimal = newAnimal();
+//        assertEquals("Healthy", normalAnimal.getHealth());
+//    }
+//
+//    @Test
+//    public void getAge_returnAnimalsAge(){
+//        NormalAnimal normalAnimal = newAnimal();
+//        assertEquals("Young", normalAnimal.getAge());
+//    }
+//
+//    @Test
+//    public void getStatus_returnAnimalsStatus(){
+//        NormalAnimal normalAnimal = newAnimal();
+//        assertEquals("Not Endangered", normalAnimal.getType());
+//    }
 
 //    @Test
 //    public void save_savedToDb_int(){

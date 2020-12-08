@@ -1,19 +1,3 @@
-{{#partial "navlinks"}}
-    <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            View Animals
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/animals/endangered">Endangered</a>
-            <a class="dropdown-item" href="/animals/not-endangered">Not Endangered</a>
-        </div>
-    </li>
-    <li class="nav-item"><a class="nav-link" href="/rangers">Our Rangers</a></li>
-    <li class="nav-item"><a class="nav-link" href="/sightings">Sighting Locations</a></li>
-    <li class="nav-item"><a class="nav-link" href="/sighting/new">New Sighting</a></li>
-{{/partial}}
-
 {{#partial "preContent"}}
     <div class="jumbotron ">
         <div class="container">
@@ -24,7 +8,7 @@
 {{/partial}}
 
 {{#partial "content"}}
-    {{#if sightings}}
+    {{#if sighting}}
         <h4 class="text-center">Here's all the animal sightings so far</h4>
         <table class="table text-center">
             <thead class="thead-dark">
@@ -36,12 +20,12 @@
             </tr>
             </thead>
             <tbody>
-            {{#each sightings}}
+            {{#each sighting}}
                 <tr>
                     <td>{{animalName}}</td>
                     <td>{{location}}</td>
-                    <td>{{readableTimestamp}}</td>
-                    <td><a href="/rangers/{{rangerid}}/details">{{rangerName}}</a></td>
+<!--                    <td>{{readableTimestamp}}</td>-->
+                    <td><a href="/rangers/{{id}}details">{{rangerName}}</a></td>
                 </tr>
             {{/each}}
             </tbody>

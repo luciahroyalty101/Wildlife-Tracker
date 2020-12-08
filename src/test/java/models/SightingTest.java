@@ -13,18 +13,18 @@ public class SightingTest {
 //    @Rule
 //public DatabaseRule databaseRule = new DatabaseRule();
 
-    private Sighting newSighting(){
-        return new Sighting("Zone A",1);
-    }
-
-    private Sighting newSighting2(){
-        return new Sighting("Zone B",2);}
-
-    @Test
-    public void sighting_instantiatesCorrectly(){
-        Sighting sighting = newSighting();
-        assertTrue(sighting instanceof Sighting);
-    }
+//    private Sighting newSighting(){
+//        return new Sighting("Zone A",1);
+//    }
+//
+//    private Sighting newSighting2(){
+//        return new Sighting("Zone B",2);}
+//
+//    @Test
+//    public void sighting_instantiatesCorrectly(){
+//        Sighting sighting = newSighting();
+//        assertTrue(sighting instanceof Sighting);
+//    }
 
 //    @Test
 //    public void getAnimalId_returnAnimalName_true(){

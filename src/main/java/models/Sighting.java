@@ -1,40 +1,65 @@
 package models;
 
 import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2oException;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class Sighting {
     private String animalName;
-    private int rangerid;
+    private String rangerName;
     private String location;
-    private Timestamp timestamp;
+//    public Timestamp timestamp;
     private int id;
 
+//    public Timestamp getTimestamp() {
+//        return timestamp;
+//    }
 
-    public Sighting(String animalName, String location, int rangerid, int id) {
+    public Sighting(String animalName, String rangerName, String location) {
         this.animalName = animalName;
-        this.location = location.trim();
-        this.id = id;
-        this.timestamp = new Timestamp(new Date().getTime());
-        this.rangerid = rangerid;
+        this.rangerName = rangerName;
+        this.location = location;
+//        this.timestamp = timestamp;
     }
 
-    public Sighting(String zone_a, int i) {
+    public void setAnimalName(String animalName) {
+        this.animalName = animalName;
     }
 
-    public Sighting(String name, String location, int id) {
+    public String getRangerName() {
+        return rangerName;
     }
 
+    public void setRangerName(String rangerName) {
+        this.rangerName = rangerName;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+//    public void setTimestamp(Timestamp timestamp) {
+//        this.timestamp = new Timestamp(timestamp.getTime());
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sighting sighting = (Sighting) o;
+        return animalName.equals(sighting.animalName) &&
+                rangerName == sighting.rangerName &&
+                Objects.equals(location, sighting.location);
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(animalName, location, rangerid);
+        return Objects.hash(animalName, location, rangerName);
     }
 
     public String getAnimalName() {
@@ -45,16 +70,20 @@ public class Sighting {
         return location;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
+//    public Timestamp getTimestamp() {
+//        return timestamp;
+//    }
 
-    public String getReadableTimestamp() {
-        return DateFormat.getDateTimeInstance().format(getTimestamp());
-    }
+//    public Timestamp getTime_sighted() {
+//        return time_sighted;
+//    }
+//    public String getReadableTimestamp(){
+//
+//        return DateFormat.getDateTimeInstance().format(getTimestamp());
+//    }
 
-    public int getRangerid() {
-        return rangerid;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -62,30 +91,31 @@ public class Sighting {
     }
 
 
-    public void save() {
-        String sql = "INSERT INTO sightings(animalname,location,timestamp,rangerid) values (:animalName,:location,:timestamp,:rangerid)";
-        try (Connection con = DB.sql2o.open()) {
-            this.id = (int) con.createQuery(sql, true)
-                    .addParameter("animalName", this.animalName)
-                    .addParameter("location", this.location)
-                    .addParameter("timestamp", this.timestamp)
-                    .addParameter("rangerid", this.rangerid)
+    public void save(){
+        String sql = "INSERT INTO sightings(animalname,location,rangername) values (:animalname,:location,:rangername)";
+        try(Connection con = DB.sql2o.open()){
+            this.id = (int) con.createQuery(sql,true)
+                    .addParameter("animalname", this.animalName)
+                    .addParameter("location",this.location)
+                    .addParameter("rangername",this.rangerName)
                     .executeUpdate()
                     .getKey();
+            setId(id);
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }
     }
-    public String getRangerName(){
-        return Ranger.find(rangerid).getName();
-    }
 
-    public static List<Sighting> all(){
-        try(Connection con = DB.sql2o.open()){
-            return con.createQuery("SELECT * FROM sightings")
-                    .executeAndFetch(Sighting.class);
+
+    public static List<Sighting> getAllSightings(){
+        String sql = "SELECT * FROM sightings;";
+        try (Connection con = DB.sql2o.open()){
+            Query query =con.createQuery(sql);
+            System.out.println(query.executeAndFetch(Sighting.class));
+            return query.executeAndFetch(Sighting.class);
         }
     }
+
     public static Sighting find(int searchId){
         try(Connection con = DB.sql2o.open()){
             return con.createQuery("SELECT * FROM sightings WHERE id=:id")
@@ -100,6 +130,7 @@ public class Sighting {
                     .executeAndFetch(String.class);
         }
     }
+
     public static List<Sighting> getAllSightingsInLocation(String locationFilter){
         try(Connection con = DB.sql2o.open()){
             return con.createQuery("SELECT * FROM sightings where location = :location")
@@ -109,6 +140,3 @@ public class Sighting {
     }
 
 }
-
-
-

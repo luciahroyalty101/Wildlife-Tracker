@@ -4,13 +4,14 @@ import org.sql2o.Connection;
 
 import java.util.List;
 
-public class NormalAnimal extends Animal {
+public class NormalAnimal {
     private static final String DB_TYPE = "Not Endangered";
+    private final String name;
+    private final String type;
 
     public NormalAnimal(String name, String health, String age) {
         this.name = name;
-        this.health = health;
-        this.age = age;
+
         this.type = DB_TYPE;
     }
     public static List<NormalAnimal> all(){
